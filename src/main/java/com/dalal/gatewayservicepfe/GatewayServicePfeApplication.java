@@ -1,0 +1,13 @@
+package com.dalal.gatewayservicepfe;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class GatewayServicePfeApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(GatewayServicePfeApplication.class, args);
+    }
+
+}
