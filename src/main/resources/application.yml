@@ -1,3 +1,27 @@
+server:
+  port: 9999
+
 spring:
   application:
     name: gateway-service-pfe
+
+  cloud:
+    gateway:
+      routes:
+        # 1. Identity Service Routes (Auth)
+        - id: identity-service-route
+          uri: lb://IDENTITY-SERVICE-PFE
+          predicates:
+            - Path=/api/v1/auth/**
+
+        # 2. Provider Content Service Routes (Services & Expertises)
+        - id: provider-content-service-route
+          uri: lb://PROVIDER-CONTENT-SERVICE-PFE
+          predicates:
+            - Path=/api/v1/service/**, /api/v1/expertise/**
+
+# ghankhalihom commenter f7alat ila tbdlat l ip i par default hit par default eureka client programmer ela had l path
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
