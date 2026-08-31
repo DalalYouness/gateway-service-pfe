@@ -7,6 +7,14 @@ spring:
 
   cloud:
     gateway:
+      default-filters:
+         # default-filters kayatbe9o 3la GA3 lroutes b automatique (bla ma nkatbo fi kola route 3la 7da)
+         # DedupeResponseHeader: kayehiyed les valeurs mkarrarin (duplicated) f nafs header
+         # mochkil li kan: CORS headers (Allow-Origin/Allow-Credentials) kano kayjiw mkarrarin
+        # (mazoji mn Gateway CorsWebFilter + mn downstream service/Netty), o l browser
+         # kaystmurr r-response kamla ila la9a nafs header b 2 valeurs (violation dyal CORS spec)
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+
       routes:
         # 1. Identity Service Routes (Auth)
         - id: identity-service-route
@@ -19,6 +27,24 @@ spring:
           uri: lb://PROVIDER-CONTENT-SERVICE-PFE
           predicates:
             - Path=/api/v1/service/**, /api/v1/expertise/**
+
+        # 3. booking and review Service Routes (Auth)
+        - id: booking-and-review-service-route
+          uri: lb://BOOKING-AND-REVIEW-SERVICE-PFE
+          predicates:
+            - Path=/api/v1/reservations/**, /api/v1/reviews/**
+
+        # 4. Notifications Service Routes
+        - id: notifications-service-route
+          uri: lb://NOTIFICATIONS-SERVICE-PFE
+          predicates:
+            - Path=/api/v1/notifications/**
+
+        # for web socket
+        - id: notification-websocket-route
+          uri: lb:ws://NOTIFICATIONS-SERVICE-PFE
+          predicates:
+            - Path=/ws-notifications/**
 
 # ghankhalihom commenter f7alat ila tbdlat l ip i par default hit par default eureka client programmer ela had l path
 #eureka:
