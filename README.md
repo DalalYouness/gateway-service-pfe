@@ -135,7 +135,3 @@ mvnw.cmd spring-boot:run
 This project is part of a microservices-based final-year student project. The gateway is the central integration layer that allows multiple independent services to be exposed behind one API endpoint.
 
 This repository currently contains the gateway service only; it assumes the discovery server and other backend services are running in the same system architecture.
-
-## License
-
-This project does not currently declare a custom license in the repository.
